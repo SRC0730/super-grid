@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build:element": "ng build --output-hashing=none",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "deploy:gh-pages": "ng deploy --repo=https://github.com/SRC0730/super-grid.git --base-href=/super-grid/"
