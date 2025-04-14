@@ -11,7 +11,7 @@ import { GridFilterField, GridOptions } from '@interfaces';
 })
 export class SuperGridWidgetComponent implements OnChanges {
   @Input() filterFields: GridFilterField[] = [];
-  @Input({ required: true }) options!: GridOptions;
+  @Input() options?: GridOptions;
 
   data: any[] = [];
 
