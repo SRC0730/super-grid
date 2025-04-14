@@ -20,6 +20,14 @@ export interface GridOptions {
    * @memberof GridOptions
    */
   data: any[];
+
+  /**
+   * 排序欄位
+   *
+   * @type {string[]}
+   * @memberof GridOptions
+   */
+  sortColumns?: string[];
 }
 
 /**
