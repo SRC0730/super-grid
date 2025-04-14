@@ -63,6 +63,22 @@
       </div>
     </div>
 
+    <div class="control-panel">
+      <h2>排序選項</h2>
+      <div>
+        <label for="sort-select">選擇排序欄位:</label>
+        <select id="sort-select">
+          <option value="name">姓名</option>
+          <option value="age">年齡</option>
+          <option value="city">城市</option>
+          <option value="job">職業</option>
+        </select>
+
+        <button id="apply-sort">套用排序</button>
+        <button id="clear-sort">清除排序</button>
+      </div>
+    </div>
+
     <super-grid id="my-grid"></super-grid>
 
     <script type="module" src="./dist/super-grid/browser/polyfills.js"></script>
@@ -100,6 +116,8 @@
             { name: "趙六", age: 35, city: "高雄", job: "醫生" },
             { name: "孫七", age: 29, city: "台北", job: "會計師" },
           ],
+          // 初始排序欄位
+          sortColumns: [],
         };
 
         // 設置初始屬性
@@ -124,6 +142,28 @@
         clearFilterBtn.addEventListener("click", () => {
           grid.filterFields = [];
           filterValue.value = "";
+        });
+
+        // 設置排序功能
+        const sortSelect = document.getElementById("sort-select");
+        const applySortBtn = document.getElementById("apply-sort");
+        const clearSortBtn = document.getElementById("clear-sort");
+
+        applySortBtn.addEventListener("click", () => {
+          const selectedField = sortSelect.value;
+          if (selectedField) {
+            // 更新 options 中的 sortColumns 屬性
+            gridOptions.sortColumns = [selectedField];
+            // 重新設置 options 以觸發變更
+            grid.options = { ...gridOptions };
+          }
+        });
+
+        clearSortBtn.addEventListener("click", () => {
+          // 清除排序設定
+          gridOptions.sortColumns = [];
+          // 重新設置 options 以觸發變更
+          grid.options = { ...gridOptions };
         });
       }
     </script>
