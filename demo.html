@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Super Grid Web Component Demo</title>
+    <link rel="stylesheet" href="./dist/super-grid/browser/styles.css" />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+      }
+      h1,
+      h2 {
+        color: #333;
+      }
+      .control-panel {
+        margin-bottom: 20px;
+        padding: 15px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        background-color: #f9f9f9;
+      }
+      button {
+        padding: 8px 16px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-right: 10px;
+      }
+      button:hover {
+        background-color: #45a049;
+      }
+      input,
+      select {
+        padding: 8px;
+        margin-right: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Super Grid Web Component Demo</h1>
+
+    <div class="control-panel">
+      <h2>過濾選項</h2>
+      <div>
+        <label for="field-select">選擇欄位:</label>
+        <select id="field-select">
+          <option value="name">姓名</option>
+          <option value="age">年齡</option>
+          <option value="city">城市</option>
+        </select>
+
+        <label for="filter-value">過濾值:</label>
+        <input type="text" id="filter-value" />
+
+        <button id="apply-filter">套用過濾</button>
+        <button id="clear-filter">清除過濾</button>
+      </div>
+    </div>
+
+    <super-grid id="my-grid"></super-grid>
+
+    <script type="module" src="./dist/super-grid/browser/polyfills.js"></script>
+    <script type="module" src="./dist/super-grid/browser/main.js"></script>
+    <script>
+      // 等待DOM完成加載
+      document.addEventListener("DOMContentLoaded", () => {
+        // 確保元素已被定義
+        if (customElements.get("super-grid")) {
+          initializeGrid();
+        } else {
+          // 如果元素尚未定義，等待它被定義
+          customElements.whenDefined("super-grid").then(() => {
+            console.log("Super Grid component is defined and ready to use");
+            initializeGrid();
+          });
+        }
+      });
+
+      function initializeGrid() {
+        const grid = document.getElementById("my-grid");
+
+        // 定義表格數據
+        const gridOptions = {
+          headers: [
+            { fieldId: "name", displayText: "姓名" },
+            { fieldId: "age", displayText: "年齡" },
+            { fieldId: "city", displayText: "城市" },
+            { fieldId: "job", displayText: "職業" },
+          ],
+          data: [
+            { name: "張三", age: 28, city: "台北", job: "工程師" },
+            { name: "李四", age: 32, city: "新竹", job: "設計師" },
+            { name: "王五", age: 24, city: "台中", job: "教師" },
+            { name: "趙六", age: 35, city: "高雄", job: "醫生" },
+            { name: "孫七", age: 29, city: "台北", job: "會計師" },
+          ],
+        };
+
+        // 設置初始屬性
+        grid.options = gridOptions;
+        grid.filterFields = [];
+
+        // 設置過濾功能
+        const fieldSelect = document.getElementById("field-select");
+        const filterValue = document.getElementById("filter-value");
+        const applyFilterBtn = document.getElementById("apply-filter");
+        const clearFilterBtn = document.getElementById("clear-filter");
+
+        applyFilterBtn.addEventListener("click", () => {
+          const selectedField = fieldSelect.value;
+          const value = filterValue.value;
+
+          if (value) {
+            grid.filterFields = [{ fieldId: selectedField, value: value }];
+          }
+        });
+
+        clearFilterBtn.addEventListener("click", () => {
+          grid.filterFields = [];
+          filterValue.value = "";
+        });
+      }
+    </script>
+  </body>
+</html>
