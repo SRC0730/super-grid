@@ -1,0 +1,24 @@
+<div class="grid-widget">
+  <table class="grid-table">
+    <thead>
+      <tr>
+        @for (header of options.headers; track $index) {
+        <th>
+          {{ header.displayText }}
+        </th>
+        }
+      </tr>
+    </thead>
+    <tbody>
+      @for (row of data; track $index) {
+      <tr>
+        @for (header of options.headers; track $index) {
+        <td>
+          {{ row[header.fieldId] }}
+        </td>
+        }
+      </tr>
+      }
+    </tbody>
+  </table>
+</div>
