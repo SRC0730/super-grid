@@ -4,8 +4,11 @@
     <thead>
       <tr>
         @for (header of options.headers; track $index) {
-        <th>
+        <th (click)="onSortColumn(header.fieldId)">
           {{ header.displayText }}
+          @if (isSortColumn(header.fieldId)) {
+          <span class="sort-icon">{{ getSortIcon(header.fieldId) }}</span>
+          }
         </th>
         }
       </tr>
